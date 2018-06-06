@@ -40,7 +40,7 @@
                             [style.width.px]="imageWidth"/>
                         </td>
                         <td>
-                            {{product.productName | EduUpper:"upper"}}
+                            <a [routerLink]="['/products',product.productId]">{{product.productName | EduUpper:"upper"}}</a>
                         </td>
                         <td>{{product.productCode |  EduUpper:"lower"}}</td>
                         <td>{{product.releaseDate}}</td>
