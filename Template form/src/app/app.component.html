@@ -1,0 +1,62 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Employee Form
+    </div>
+    <div class="panel-body">
+        <form #form="ngForm" novalidate>
+            <div class="form-group" [class.has-error]="firstname.invalid">
+                <label class="control-label" for="fname">FirstName:</label>
+                <input type="text" required name="fname" 
+            placeholder="FirstName" [ngModel]="model.fname"
+            (ngModelChange)="firstToUpper($event)" id="fname" class="form-control"
+            #firstname="ngModel"/>
+            <div class="alert alert-danger" *ngIf="firstname.invalid">
+                FirstName is required
+            </div>
+            <h3>Classes</h3>
+            <h4>{{firstname.invalid}}</h4>
+           </div>
+            <div class="form-group">
+                <label for="lname">LastName:</label>
+                <input type="text" required name="lname" 
+            placeholder="LastName" [(ngModel)]="model.lname" id="lname" class="form-control"/>
+           </div>  
+            <div class="form-group">
+                <label for="password">password:</label>
+                <input type="text" required name="password"  minlength="5" #password="ngModel"
+            placeholder="password" [(ngModel)]="model.password" id="password" class="form-control"/>
+                <div class="alert alert-danger" *ngIf="password.invalid">
+                password must longer than 5 letters
+            </div>
+        </div>       
+           <div class="checkbox">
+               <label>
+                   <input type="checkbox" name="fulltime" [(ngModel)]="model.fulltime">FullTime
+               </label>
+           </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="gender" value="Female" [(ngModel)]="model.gender">Female
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="gender" value="male" [(ngModel)]="model.gender">Male
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Code lang</label>
+                <select class="form-control" [(ngModel)]="model.codeLang" name="codeLang">
+                    <option *ngFor="let lang of languages">
+                        {{lang}}
+                    </option>
+                   
+                </select>
+            </div>
+           <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </div>
+</div>
+Model:{{model | json}}
+<br/>
+Angulae:{{form.value| json}}
