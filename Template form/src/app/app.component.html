@@ -3,7 +3,7 @@
         Employee Form
     </div>
     <div class="panel-body">
-        <form #form="ngForm" novalidate>
+        <form #form="ngForm" novalidate (submit)="submitForm(form)">
             <div class="form-group" [class.has-error]="firstname.invalid">
                 <label class="control-label" for="fname">FirstName:</label>
                 <input type="text" required name="fname" 
@@ -20,15 +20,23 @@
                 <label for="lname">LastName:</label>
                 <input type="text" required name="lname" 
             placeholder="LastName" [(ngModel)]="model.lname" id="lname" class="form-control"/>
-           </div>  
+           </div>
+           <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" required name="email"  pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" #email="ngModel"
+                placeholder="email" [(ngModel)]="model.email" id="email" class="form-control"/>
+                    <div class="alert alert-danger" *ngIf="email.invalid && email.touched">
+                    Please enter valid email
+                </div>
+            </div>
             <div class="form-group">
                 <label for="password">password:</label>
                 <input type="text" required name="password"  minlength="5" #password="ngModel"
-            placeholder="password" [(ngModel)]="model.password" id="password" class="form-control"/>
-                <div class="alert alert-danger" *ngIf="password.invalid">
-                password must longer than 5 letters
-            </div>
-        </div>       
+                placeholder="password" [(ngModel)]="model.password" id="password" class="form-control"/>
+                    <div class="alert alert-danger" *ngIf="password.invalid">
+                    password must longer than 5 letters
+                </div>
+            </div>       
            <div class="checkbox">
                <label>
                    <input type="checkbox" name="fulltime" [(ngModel)]="model.fulltime">FullTime
@@ -44,14 +52,19 @@
                     <input type="radio" name="gender" value="male" [(ngModel)]="model.gender">Male
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" [class.has-error]="hasCodeLang" >
                 <label>Code lang</label>
-                <select class="form-control" [(ngModel)]="model.codeLang" name="codeLang">
+                <select class="form-control" [(ngModel)]="model.codeLang"
+                 name="codeLang" (blur)="validateCodeLang($event)">
+                    <option value="default">Select Code Lang</option>
                     <option *ngFor="let lang of languages">
                         {{lang}}
                     </option>
                    
                 </select>
+                <div class="alert alert-danger" *ngIf="hasCodeLang">
+                    Please select valid option
+                </div>
             </div>
            <button type="submit" class="btn btn-success">Submit</button>
         </form>
